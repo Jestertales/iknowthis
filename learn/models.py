@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
 class Topic(models.Model):
     name = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='topics')
 
     def __str__(self):
         return self.name
@@ -24,6 +26,7 @@ class LearningResource(models.Model):
     progress_pages = models.IntegerField(null=True, blank=True)
     progress_time = models.DurationField(null=True, blank=True)
     progress_percent = models.FloatField(null=True, blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='learning_resources')
 
     def save(self, *args, **kwargs):
         if self.resource_type == 'B' and self.page_count and self.progress_pages:
